@@ -1,3 +1,31 @@
 .full-width-table {
   width: 100%;
 }
+
+dl {
+  dt {
+    text-shadow: 1px 1px lightgrey;
+    margin: 2vh 0 2vh 0;
+  }
+  
+  dd {
+    margin: 1vh 2vw 1vh 2vw;
+  }
+}
+
+mat-card {
+  text-shadow: 1px 1px lightgrey;
+  button {
+    color: white;
+  }
+  .like-btn {
+    background-color: var(--prime);
+  }
+  .edit-btn{
+    background-color: var(--second);
+  }
+  img {
+    border-radius: 5px;
+    box-shadow: 0.25vw 0.5vh lightgrey;
+  }
+}

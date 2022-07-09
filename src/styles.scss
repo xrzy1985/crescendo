@@ -5,4 +5,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .example-spacer {
     flex: 1 1 auto;
-  }
+}
+
+:root {
+  --second: #42B72A;
+  --prime: #1877F2;
+}

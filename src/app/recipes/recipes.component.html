@@ -1,3 +1,23 @@
-<div class="mat-elevation-z8">
-  <h2>working</h2>
+<div class="mat-elevation-z8" style="padding: 2vh 2vw 2vh 2vw;">
+  <dl>
+    <dt>Recipes</dt>
+    <dd *ngFor="let recipe of recipes">
+      <mat-card class="example-card">
+        <mat-card-title-group>
+          <mat-card-title>{{ recipe.title }}</mat-card-title>
+          <mat-card-subtitle>Servings: {{ recipe.servings }}</mat-card-subtitle>
+          <img mat-card-lg-image src="/assets/{{recipe.images.full}}" >
+        </mat-card-title-group>
+        <mat-card-content>
+          {{recipe.description}}
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button class="like-btn">LIKE</button>
+          <button mat-button class="edit-btn">EDIT</button>
+        </mat-card-actions>
+      </mat-card>
+    </dd>
+    <dt>Specials</dt>
+    <dd *ngFor="let special of specials">{{ special.title }}</dd>
+  </dl>
 </div>

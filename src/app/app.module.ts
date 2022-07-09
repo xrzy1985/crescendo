@@ -14,13 +14,10 @@ import { RecipesComponent } from './recipes/recipes.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavComponent,
-    RecipesComponent
-  ],
+  declarations: [AppComponent, NavComponent, RecipesComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -33,9 +30,10 @@ import { MatSortModule } from '@angular/material/sort';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCardModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

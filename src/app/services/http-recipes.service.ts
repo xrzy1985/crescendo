@@ -7,12 +7,14 @@ import { Injectable } from '@angular/core';
 export class HttpService {
   LOCAL_URL: string = 'http://localhost:3001';
   RECIPES: string = 'recipes';
-  SPECIALS: string = '/specials';
+  SPECIALS: string = 'specials';
 
   recipes: any[];
+  specials: any[];
 
   constructor(private http: HttpClient) {
     this.recipes = [];
+    this.specials = [];
   }
 
   gatherRecipes() {
@@ -39,5 +41,13 @@ export class HttpService {
 
   setRecipes(recipes: any[]) {
     this.recipes = recipes;
+  }
+
+  getSpecials() {
+    return this.http.get<any>(`${this.LOCAL_URL}/${this.SPECIALS}`);
+  }
+
+  setSpecials(specials: any[]) {
+    this.specials = specials;
   }
 }
