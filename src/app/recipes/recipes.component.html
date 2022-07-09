@@ -1,18 +1,19 @@
-<div class="mat-elevation-z8" style="padding: 2vh 2vw 2vh 2vw;">
+<div class="mat-elevation-z8" id="card-container">
   <dl>
-    <dt>Recipes</dt>
+    <dt>{{titles[0]}}</dt>
     <dd *ngFor="let recipe of recipes">
-      <mat-card class="example-card">
+      <mat-card (click)="showDetails()">
         <mat-card-title-group>
           <mat-card-title>{{ recipe.title }}</mat-card-title>
           <mat-card-subtitle>Servings: {{ recipe.servings }}</mat-card-subtitle>
+          <!-- @todo render img from server side, write get request for images -->
           <img mat-card-lg-image src="/assets/{{recipe.images.full}}" >
         </mat-card-title-group>
         <mat-card-content>
           {{recipe.description}}
         </mat-card-content>
         <mat-card-actions>
-          <mat-toolbar style="background-color: transparent;">
+          <mat-toolbar *ngIf="isLoggedIn">
             <span class="spacer"></span>
             <button mat-button class="like-btn">LIKE</button>
             <button mat-button class="edit-btn">EDIT</button>
@@ -20,7 +21,7 @@
         </mat-card-actions>
       </mat-card>
     </dd>
-    <dt>Specials</dt>
+    <dt>{{titles[1]}}</dt>
     <dd *ngFor="let special of specials">{{ special.title }}</dd>
   </dl>
 </div>

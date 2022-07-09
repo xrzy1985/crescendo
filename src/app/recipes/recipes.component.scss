@@ -1,5 +1,5 @@
-.full-width-table {
-  width: 100%;
+#card-container {
+  padding: 2vh 2vw 2vh 2vw;
 }
 
 dl {
@@ -36,5 +36,10 @@ mat-card {
 
   mat-card-content {
     margin: 2vh 2vw;
+  }
+
+  mat-toolbar {
+    background-color: transparent;
+    padding: 0;
   }
 }
