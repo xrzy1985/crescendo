@@ -16,6 +16,7 @@ dl {
 mat-card {
   background-color: lightgray;
   text-shadow: .5px .5px darkgray;
+  padding-bottom: 0;
 
   button {
     color: white;
@@ -34,8 +35,8 @@ mat-card {
     box-shadow: 0.25vw 0.5vh darkgray;
   }
 
-  mat-card-content {
-    margin: 2vh 2vw;
+  .extended {
+    border-radius: 5px;
   }
 
   mat-toolbar {

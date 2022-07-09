@@ -42,13 +42,6 @@ export class RecipesComponent implements AfterContentChecked, OnInit {
     this.isLoggedIn = this.loginService.isUserLoggedIn();
   }
 
-  showDetails(): void {
-    if (this.isLoggedIn) {
-      this.showAdditionalDetails = !this.showAdditionalDetails;
-      alert('You want to expand the details');
-    }
-  }
-
   checkIngredient(id: string) {
     let test = !!this.specialMap.has(id);
     if (this.specials.length && !test) {

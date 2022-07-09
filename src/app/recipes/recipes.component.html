@@ -9,7 +9,7 @@
               {{recipe.title}}
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <mat-card (click)="showDetails()">
+          <mat-card>
             <mat-card-title-group>
               <mat-card-title>{{ recipe.title }}</mat-card-title>
               <mat-card-subtitle>
@@ -26,7 +26,7 @@
             </mat-card-content>
             <mat-card-content>
               <span></span>
-              <mat-expansion-panel (opened)="ingredientState = true" (closed)="ingredientState = false" hideToggle>
+              <mat-expansion-panel class="extended" (opened)="ingredientState = true" (closed)="ingredientState = false" hideToggle>
                 <mat-expansion-panel-header>
                   <mat-panel-title>
                     Ingredients
@@ -45,7 +45,7 @@
                 </ul>
               </mat-expansion-panel>
               <br>
-              <mat-expansion-panel  (opened)="directionState = true" (closed)="!directionState = false" hideToggle>
+              <mat-expansion-panel class="extended" (opened)="directionState = true" (closed)="!directionState = false" hideToggle>
                 <mat-expansion-panel-header>
                   <mat-panel-title>
                     Directions
