@@ -38,7 +38,9 @@
                 <ul *ngFor="let ingredient of recipe.ingredients">
                   <li>
                     {{ingredient.amount}} {{ingredient.measurement}} {{ingredient.name}}
-                    <span *ngIf="checkIngredient(ingredient.uuid)">MORE HERE</span>
+                    <div class="ingredient-details" *ngIf="checkIngredient(ingredient.uuid)">
+                      <small>{{getIngredientDetails(ingredient.uuid)}}</small>
+                    </div>
                   </li>
                 </ul>
               </mat-expansion-panel>

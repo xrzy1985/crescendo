@@ -23,6 +23,7 @@ export class RecipesComponent implements AfterContentChecked, OnInit {
   showAdditionalDetails: boolean;
   ingredientState: boolean = false;
   directionState: boolean = false;
+  specialMap: Map<string, any> = new Map();
 
   constructor(private http: HttpService, private loginService: LoginService) {
     this.titles = ['Recipes', 'Specials'];
@@ -48,10 +49,22 @@ export class RecipesComponent implements AfterContentChecked, OnInit {
     }
   }
 
-  checkIngredient(val: any) {
-    if (this.specials.length) {
-      console.log(val);
+  checkIngredient(id: string) {
+    let test = !!this.specialMap.has(id);
+    if (this.specials.length && !test) {
+      let container = this.specials.filter(s => {
+        if (s.ingredientId === id) {
+          this.specialMap.set(id, {title: s.title, type: s.type, text: s.text});
+          test = true;
+        }
+      });
     }
+    return test;
+  }
+
+  getIngredientDetails(id: string) {
+    let i = this.specialMap.get(id)
+    return `${i.title} ${i.type} ${i.text}`;
   }
 
   getRecipes() {
