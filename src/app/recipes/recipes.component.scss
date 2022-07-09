@@ -14,8 +14,8 @@ dl {
 }
 
 mat-card {
-
-  text-shadow: 1px 1px lightgrey;
+  background-color: lightgray;
+  text-shadow: .5px .5px darkgray;
 
   button {
     color: white;
@@ -31,7 +31,7 @@ mat-card {
 
   img {
     border-radius: 5px;
-    box-shadow: 0.25vw 0.5vh lightgrey;
+    box-shadow: 0.25vw 0.5vh darkgray;
   }
 
   mat-card-content {

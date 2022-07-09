@@ -1,30 +1,35 @@
-import { AfterContentChecked, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterContentChecked,
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
-import { RecipesDataSource, RecipesItem } from './recipes-datasource';
 import { HttpService } from '../services/http-recipes.service';
 import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-recipes',
   templateUrl: './recipes.component.html',
-  styleUrls: ['./recipes.component.scss']
+  styleUrls: ['./recipes.component.scss'],
 })
 export class RecipesComponent implements AfterContentChecked, OnInit {
-
   recipes: any[];
   specials: any[];
   titles: string[];
   isLoggedIn: boolean;
   showAdditionalDetails: boolean;
-  
+  ingredientState: boolean = false;
+  directionState: boolean = false;
+
   constructor(private http: HttpService, private loginService: LoginService) {
     this.titles = ['Recipes', 'Specials'];
     this.isLoggedIn = false;
     this.showAdditionalDetails = false;
     this.recipes = [];
-    this.specials = [{title: 'No Specials at this Time'}];
+    this.specials = [];
   }
 
   ngOnInit() {
@@ -40,6 +45,12 @@ export class RecipesComponent implements AfterContentChecked, OnInit {
     if (this.isLoggedIn) {
       this.showAdditionalDetails = !this.showAdditionalDetails;
       alert('You want to expand the details');
+    }
+  }
+
+  checkIngredient(val: any) {
+    if (this.specials.length) {
+      console.log(val);
     }
   }
 
@@ -76,5 +87,4 @@ export class RecipesComponent implements AfterContentChecked, OnInit {
       },
     });
   }
-
 }

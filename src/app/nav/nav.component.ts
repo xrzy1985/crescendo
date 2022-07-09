@@ -14,6 +14,7 @@ export class NavComponent {
 
   @Input() title = '';
   isUserLoggedIn: boolean = false;
+  name: string = '';
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -25,6 +26,11 @@ export class NavComponent {
 
   ngOnInit() {
     this.isUserLoggedIn = this.loginService.isUserLoggedIn();
+    this.name = 'Guest';
+  }
+
+  getGreeting(): string {
+    return this.isUserLoggedIn ? 'Welcome back, ' : 'Hello, ';
   }
 
   loggedIn(): boolean {
@@ -34,6 +40,7 @@ export class NavComponent {
   login(user: User) {
     if (user) {
       this.loginService.login(user);
+      this.name = user.name;
       this.isUserLoggedIn = true;
     }
   }
@@ -41,6 +48,7 @@ export class NavComponent {
   logout(user: User) {
     if (user.email === this.loginService.getUser().email) {
       this.loginService.logout(user);
+      this.name = 'Guest';
       this.isUserLoggedIn = false;
     }
   }

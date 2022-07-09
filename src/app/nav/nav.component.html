@@ -21,6 +21,7 @@
       </button>
       <span>{{title}}</span>
       <span class="spacer"></span>
+      <span class="name">{{getGreeting()}}{{name}}</span>
       <div class="example-button-row">
         <div *ngIf="loggedIn();else other_content">
           <button mat-raised-button

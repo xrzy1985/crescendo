@@ -2,26 +2,78 @@
   <dl>
     <dt>{{titles[0]}}</dt>
     <dd *ngFor="let recipe of recipes">
-      <mat-card (click)="showDetails()">
-        <mat-card-title-group>
-          <mat-card-title>{{ recipe.title }}</mat-card-title>
-          <mat-card-subtitle>Servings: {{ recipe.servings }}</mat-card-subtitle>
-          <!-- @todo render img from server side, write get request for images -->
-          <img mat-card-lg-image src="/assets/{{recipe.images.full}}" >
-        </mat-card-title-group>
-        <mat-card-content>
-          {{recipe.description}}
-        </mat-card-content>
-        <mat-card-actions>
-          <mat-toolbar *ngIf="isLoggedIn">
-            <span class="spacer"></span>
-            <button mat-button class="like-btn">LIKE</button>
-            <button mat-button class="edit-btn">EDIT</button>
-          </mat-toolbar>
-        </mat-card-actions>
-      </mat-card>
+      <mat-accordion>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{recipe.title}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-card (click)="showDetails()">
+            <mat-card-title-group>
+              <mat-card-title>{{ recipe.title }}</mat-card-title>
+              <mat-card-subtitle>
+                Serves: {{ recipe.servings }} people
+                <br/>
+                Prep: {{ recipe.prepTime }} mins
+                <br/>
+                Cook: {{ recipe.cookTime }} mins
+              </mat-card-subtitle>
+              <img mat-card-lg-image src="/assets/{{recipe.images.full}}" >
+            </mat-card-title-group>
+            <mat-card-content>
+              {{recipe.description}}
+            </mat-card-content>
+            <mat-card-content>
+              <span></span>
+              <mat-expansion-panel (opened)="ingredientState = true" (closed)="ingredientState = false" hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Ingredients
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    {{ingredientState ? 'Close' : 'Open'}}
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <ul *ngFor="let ingredient of recipe.ingredients">
+                  <li>
+                    {{ingredient.amount}} {{ingredient.measurement}} {{ingredient.name}}
+                    <span *ngIf="checkIngredient(ingredient.uuid)">MORE HERE</span>
+                  </li>
+                </ul>
+              </mat-expansion-panel>
+              <br>
+              <mat-expansion-panel  (opened)="directionState = true" (closed)="!directionState = false" hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Directions
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    {{directionState ? 'Close' : 'Open'}}
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <span>* indicates the step is optional.</span>
+                <ol>
+                  <li *ngFor="let direction of recipe.directions">
+                    <span *ngIf="direction.optional">* </span>
+                    {{direction.instructions}}
+                  </li>
+                </ol> 
+              </mat-expansion-panel>
+              <br>
+            </mat-card-content>
+            <mat-card-actions>
+              <mat-toolbar *ngIf="isLoggedIn">
+                <span class="spacer"></span>
+                <button mat-button class="like-btn">LIKE</button>
+                <button mat-button class="edit-btn">EDIT</button>
+              </mat-toolbar>
+            </mat-card-actions>
+          </mat-card>
+        </mat-expansion-panel>
+      </mat-accordion>
     </dd>
-    <dt>{{titles[1]}}</dt>
-    <dd *ngFor="let special of specials">{{ special.title }}</dd>
+    <!-- <dt>{{titles[1]}}</dt>
+    <dd *ngFor="let special of specials">{{ special.title }}</dd> -->
   </dl>
 </div>
