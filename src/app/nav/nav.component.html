@@ -5,9 +5,9 @@
       [opened]="false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="#">About</a>
-      <a mat-list-item href="#">More...</a>
-      <a mat-list-item href="#">Enough...</a>
+      <a mat-list-item href="#">Our Goal</a>
+      <a mat-list-item href="#">Login</a>
+      <a mat-list-item href="#">Sign up</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -19,7 +19,17 @@
         (click)="drawer.toggle()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>recipe-list</span>
+      <span>{{title}}</span>
+      <span class="example-spacer"></span>
+      <div class="example-button-row">
+        <div *ngIf="isUserLoggedIn;else other_content">
+          <button mat-raised-button id="login">Log Out</button>
+        </div>
+        <ng-template #other_content>
+          <button mat-raised-button id="login">Log in</button>
+        </ng-template>
+        <button mat-raised-button *ngIf="!isUserLoggedIn" id="signup">Sign up</button>
+      </div>
     </mat-toolbar>
       <app-recipes></app-recipes>
   </mat-sidenav-content>
