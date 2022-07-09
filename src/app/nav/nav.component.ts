@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { LoginService } from '../services/login.service';
+import { User } from '../models/User';
 
 @Component({
   selector: 'app-nav',
@@ -26,12 +27,26 @@ export class NavComponent {
     this.isUserLoggedIn = this.loginService.isUserLoggedIn();
   }
 
-  login(user: any) {
-    this.loginService.login({name: 'James Patterson', email: 'jamespatterson.feswe@yahoo.com', pass: 'abc'});
+  loggedIn(): boolean {
+    return this.isUserLoggedIn;
   }
 
-  logout(user: any) {
-    this.loginService.logout({name: 'James Patterson', email: 'jamespatterson.feswe@yahoo.com', pass: 'abc'});
+  login(user: User) {
+    if (user) {
+      this.loginService.login(user);
+      this.isUserLoggedIn = true;
+    }
+  }
+
+  logout(user: User) {
+    if (user.email === this.loginService.getUser().email) {
+      this.loginService.logout(user);
+      this.isUserLoggedIn = false;
+    }
+  }
+
+  signup(user: User) {
+    console.log(user);
   }
 
 }

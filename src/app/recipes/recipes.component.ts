@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { RecipesDataSource, RecipesItem } from './recipes-datasource';
+import { HttpService } from '../services/http-recipes.service';
 
 @Component({
   selector: 'app-recipes',
@@ -10,21 +11,31 @@ import { RecipesDataSource, RecipesItem } from './recipes-datasource';
   styleUrls: ['./recipes.component.scss']
 })
 export class RecipesComponent implements AfterViewInit {
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) table!: MatTable<RecipesItem>;
-  dataSource: RecipesDataSource;
 
-  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name'];
-
-  constructor() {
-    this.dataSource = new RecipesDataSource();
+  recipes: any[];
+  
+  constructor(private http: HttpService) {
+    this.recipes = [];
+    this.getRecipes();
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
+  ngAfterViewInit(): void {}
+
+  getRecipes() {
+    this.http.getRecipes().subscribe({
+      next: (resp: any[]) => {
+        this.recipes.length = 0;
+        for (let i = 0, iLen = resp.length; i < iLen; i++) {
+          const recipe = resp[i];
+          this.recipes.push(recipe);
+        }
+        this.http.setRecipes(this.recipes);
+        console.log(this.recipes);
+      },
+      error: (error: any) => {
+        console.error('ERROR: GET REQUEST');
+      },
+    });
   }
+
 }

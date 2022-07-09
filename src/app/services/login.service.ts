@@ -16,10 +16,15 @@ export class LoginService {
 
   isUserLoggedIn(): boolean { return this.isLoggedIn; }
 
+  getUser(): User {
+    return this.user;
+  }
+
   login(user: User) {
     if (user) {
       this.isLoggedIn = true;
       this.user = user;
+      console.log(this.user);
     }
   }
 

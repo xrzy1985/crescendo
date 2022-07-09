@@ -23,6 +23,12 @@
   }
 }
 
+@media (max-width: 500px) {
+  .example-button-row {
+      display: none;
+  }
+}
+
 #login {
   background-color: #1877F2;
   color: white;
