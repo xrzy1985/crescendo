@@ -18,9 +18,11 @@ import { LoginService } from '../services/login.service';
 export class RecipesComponent implements AfterContentChecked, OnInit {
   recipes: any[];
   specials: any[];
+  ingredients: any[];
   titles: string[];
   isLoggedIn: boolean;
   showAdditionalDetails: boolean;
+  mainState: boolean = false;
   ingredientState: boolean = false;
   directionState: boolean = false;
   specialMap: Map<string, any> = new Map();
@@ -31,6 +33,7 @@ export class RecipesComponent implements AfterContentChecked, OnInit {
     this.showAdditionalDetails = false;
     this.recipes = [];
     this.specials = [];
+    this.ingredients = [];
   }
 
   ngOnInit() {
@@ -45,9 +48,13 @@ export class RecipesComponent implements AfterContentChecked, OnInit {
   checkIngredient(id: string) {
     let test = !!this.specialMap.has(id);
     if (this.specials.length && !test) {
-      let container = this.specials.filter(s => {
+      let container = this.specials.filter((s) => {
         if (s.ingredientId === id) {
-          this.specialMap.set(id, {title: s.title, type: s.type, text: s.text});
+          this.specialMap.set(id, {
+            title: s.title,
+            type: s.type,
+            text: s.text,
+          });
           test = true;
         }
       });
@@ -56,7 +63,7 @@ export class RecipesComponent implements AfterContentChecked, OnInit {
   }
 
   getIngredientDetails(id: string) {
-    let i = this.specialMap.get(id)
+    let i = this.specialMap.get(id);
     return `${i.title} ${i.type} ${i.text}`;
   }
 
@@ -66,7 +73,11 @@ export class RecipesComponent implements AfterContentChecked, OnInit {
         this.recipes.length = 0;
         for (let i = 0, iLen = resp.length; i < iLen; i++) {
           const recipe = resp[i];
+          this.ingredients = Array.from(
+            new Set(this.ingredients.concat(recipe.ingredients))
+          );
           this.recipes.push(recipe);
+          console.log(recipe);
         }
         this.http.setRecipes(this.recipes);
       },

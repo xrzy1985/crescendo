@@ -5,9 +5,9 @@
       [opened]="false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="#">Our Goal</a>
-      <a mat-list-item href="#">Login</a>
-      <a mat-list-item href="#">Sign up</a>
+      <a mat-list-item href="/">Our Goal</a>
+      <a mat-list-item href="/">Login</a>
+      <a mat-list-item href="/">Sign up</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -23,19 +23,21 @@
       <span class="spacer"></span>
       <span class="name">{{getGreeting()}}{{name}}</span>
       <div class="example-button-row">
-        <div *ngIf="loggedIn();else other_content">
+        <div *ngIf="this.isUserLoggedIn;else guest">
           <button mat-raised-button
                   (click)="logout({name: 'James Patterson', email: 'jamespatterson.feswe@yahoo.com', pass: 'abc'})"
                   id="login">
             Log Out
           </button>
+          <button mat-raised-button (click)="openDialog()" id="signup">Add Recipe</button>
         </div>
-        <ng-template #other_content>
+        <ng-template #guest>
           <button mat-raised-button
                   (click)="login({name: 'James Patterson', email: 'jamespatterson.feswe@yahoo.com', pass: 'abc'})"
                   id="login">
             Log in
           </button>
+          <button mat-raised-button *ngIf="!this.isUserLoggedIn" id="signup">Sign up</button>
         </ng-template>
       </div>
     </mat-toolbar>

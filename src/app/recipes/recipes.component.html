@@ -19,7 +19,7 @@
                 <br/>
                 Cook: {{ recipe.cookTime }} mins
               </mat-card-subtitle>
-              <img mat-card-lg-image src="/assets/{{recipe.images.full}}" >
+              <img mat-card-lg-image src="/assets/{{recipe.images.full}}">
             </mat-card-title-group>
             <mat-card-content>
               {{recipe.description}}
@@ -67,7 +67,7 @@
             <mat-card-actions>
               <mat-toolbar *ngIf="isLoggedIn">
                 <span class="spacer"></span>
-                <button mat-button class="like-btn">LIKE</button>
+                <!-- <button mat-button class="like-btn">LIKE</button> -->
                 <button mat-button class="edit-btn">EDIT</button>
               </mat-toolbar>
             </mat-card-actions>

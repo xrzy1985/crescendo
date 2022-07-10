@@ -1,0 +1,81 @@
+<form [formGroup]="recipeForm" novalidate>
+  <mat-card class="shipping-card">
+    <mat-card-header style="margin: 0;">
+      <mat-card-title>New Recipe Drop</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Title" formControlName="title">
+            <mat-error *ngIf="recipeForm.controls['title'].hasError('required')">
+              A title for your recipe is <strong>required</strong>.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="Description" formControlName="description"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Serves how many people" formControlName="servings">
+            <mat-error *ngIf="recipeForm.controls['servings'].hasError('required')">
+              Please, provide how many this recipe will serve.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Prep Time" formControlName="prepTime">
+            <mat-error *ngIf="recipeForm.controls['prepTime'].hasError('required')">
+              Please, provide a prep time.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Cook Time" formControlName="cookTime">
+            <mat-error *ngIf="recipeForm.controls['cookTime'].hasError('required')">
+              Please, provide a cook time.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <textarea matInput placeholder="Ingredients List" formControlName="ingredients"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-list role="list">
+          <mat-list-item role="direction" *ngFor="let dir of data.directions; let i = index">{{i + 1}}. {{dir}}</mat-list-item>
+        </mat-list>
+        <div class="row" id="directions">
+          <input matInput type="text" [(ngModel)]="nextDirection" placeholder="Add more directions" [ngModelOptions]="{standalone: true}">
+          <button mat-mini-fab style="float:right; background-color: var(--prime);" (click)="addDirection(nextDirection)">+</button>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <p>
+      <mat-toolbar style="background-color: transparent;">
+        <span class="spacer"></span>
+        <button mat-raised-button color="primary" (click)="addRecipe()">Submit</button>
+    </mat-toolbar>
+    </p>
+  </mat-card>
+</form>
