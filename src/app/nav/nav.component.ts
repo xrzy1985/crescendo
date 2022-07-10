@@ -17,7 +17,6 @@ export class NavComponent {
   @Input() title = '';
   isUserLoggedIn: boolean = false;
   name: string = '';
-  default: any = {title: '', description: '', servings: '', prepTime: '', cookTime: '', ingredients: [], directions: ['Gather materials']};
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
@@ -66,12 +65,12 @@ export class NavComponent {
     console.log(user);
   }
 
-  openDialog(data: any = this.default): void {
+  openDialog(): void {
     this.dialog
       .open(FormComponent, {
         width: '80vw',
         height: '80vh',
-        data: data,
+        data: {title: '', description: '', servings: '', prepTime: '', cookTime: '', ingredients: [], directions: ['Gather materials']},
       })
       .afterClosed()
       .subscribe((resp) => {
@@ -79,18 +78,4 @@ export class NavComponent {
       });
     }
   }
-
-  // addCustomer(trigger: boolean) {
-  //   this.dialog.open(DialogComponent, {
-  //     width: '50%',
-  //     height: '90vh',
-  //   }).afterClosed()
-  //   .subscribe((resp) => {
-  //     if (resp !== 'update') {
-  //       this.getCustomers();
-  //     }
-  //   });
-  // }
-
-// }
 
