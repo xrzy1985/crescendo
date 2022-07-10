@@ -69,7 +69,6 @@ export class RecipesComponent implements AfterContentChecked, OnInit {
           this.recipes.push(recipe);
         }
         this.http.setRecipes(this.recipes);
-        console.log(this.recipes);
       },
       error: (error: any) => {
         console.error('ERROR: GET REQUEST');
@@ -86,7 +85,6 @@ export class RecipesComponent implements AfterContentChecked, OnInit {
           this.specials.push(special);
         }
         this.http.setSpecials(this.specials);
-        console.log(this.specials);
       },
       error: (error: any) => {
         console.error('ERROR: GET REQUEST');

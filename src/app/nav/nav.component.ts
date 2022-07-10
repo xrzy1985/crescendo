@@ -33,10 +33,6 @@ export class NavComponent {
     return this.isUserLoggedIn ? 'Welcome back, ' : 'Hello, ';
   }
 
-  loggedIn(): boolean {
-    return this.isUserLoggedIn;
-  }
-
   login(user: User) {
     if (user) {
       this.loginService.login(user);
