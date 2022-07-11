@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Prereqs
 
-1. A browswer
+1. A browser
 2. VS code or similar
 3. Pull the code from github
 4. Open the folder in the root of the project
@@ -16,8 +16,8 @@ Run `npm run this` for a server that will open `automatically` on the address, `
 
 ## Development Board
 
-C01: Start the edit process functionality; load recipe, modify data, see data logged
-C02: Save data into local source, ensure updates are apparent on UI
-C03: Add in POST/UPDATE request to JSON server to update the according record given a uuid
-C04: Implement a proper login form
-C05: ...
+C01: Start the edit process functionality; load recipe, modify data, see data logged  
+C02: Save data into local source, ensure updates are apparent on UI  
+C03: Add in POST/UPDATE request to JSON server to update the according record given a uuid  
+C04: Implement a proper login form  
+C05: ...  
