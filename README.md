@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Prereqs
 
-1. A browswer
+1. A browser
 2. VS code or similar
 3. Pull the code from github
 4. Open the folder in the root of the project
