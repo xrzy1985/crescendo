@@ -7,6 +7,7 @@ import { LoginService } from '../services/login.service';
 import { User } from '../models/User';
 import { RecipeService } from '../services/recipe.service';
 import { FormComponent } from '../form/form.component';
+import { Ingredient, Direction, PartialRecipe } from '../models/Recipe';
 
 @Component({
   selector: 'app-nav',
@@ -66,19 +67,20 @@ export class NavComponent {
   }
 
   openDialog(): void {
+    const partial: PartialRecipe = {
+      title: '',
+      description: '',
+      servings: '',
+      prepTime: '',
+      cookTime: '',
+      ingredients: [],
+      directions: [{ instructions: 'Gather materials', optional: false }],
+    };
     this.dialog
       .open(FormComponent, {
         width: '80vw',
         height: '80vh',
-        data: {
-          title: '',
-          description: '',
-          servings: '',
-          prepTime: '',
-          cookTime: '',
-          ingredients: [],
-          directions: [{ instructions: 'Gather materials', optional: false }],
-        },
+        data: partial,
       })
       .afterClosed();
   }

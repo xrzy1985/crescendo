@@ -18,4 +18,8 @@ export class HttpService {
   getSpecials() {
     return this.http.get<any>(`${this.LOCAL_URL}/${this.SPECIALS}`);
   }
+
+  /**
+   * @todo WRITE POST REQUESTS TO RECIPES AND SPECIALS
+   */
 }
