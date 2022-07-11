@@ -28,9 +28,11 @@ import { Ingredient, Recipe } from '../models/Recipe';
 })
 export class FormComponent {
   recipeForm = this.fb.group({
+    amount: [null, Validators.required],
+    measurement: [null, Validators.required],
     cookTime: [
       null,
-      [Validators.required, Validators.min(1), Validators.max(300)],
+      [Validators.required, Validators.min(1), Validators.max(360)],
     ],
     description: [null],
     prepTime: [
@@ -114,13 +116,28 @@ export class FormComponent {
     this.clearLocalCache();
   }
 
+  removeIngredient(ingredient: Ingredient) {
+    if (ingredient) {
+      let index = this.data.ingredients.findIndex((i: Ingredient) => i.uuid === ingredient.uuid);
+      if (index > -1) {
+        this.data.ingredients.splice(index, 1);
+      }
+    }
+  }
+
   clearLocalCache() {
     this.amount = '';
+    this.recipeForm.controls.amount.reset();
     this.measurement = '';
+    this.recipeForm.controls.measurement.reset();
     this._ingredient_ = '';
   }
 
   isDef(val: any) {
     return val !== undefined && val !== null && val !== '';
+  }
+
+  screenWidth() {
+    return window.innerWidth;
   }
 }

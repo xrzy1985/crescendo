@@ -14,14 +14,20 @@
       </div>
       <div class="row">
         <mat-form-field class="full-width">
-          <textarea matInput placeholder="Description" formControlName="description"></textarea>
+          <textarea matInput placeholder="Description of the recipe you're submitting" formControlName="description"></textarea>
         </mat-form-field>
       </div>
-      <div class="row">
+      <div [ngClass]="screenWidth() > 800 ? 'row' : 'col'">
         <mat-form-field class="full-width">
           <input matInput placeholder="Serves how many people" formControlName="servings">
           <mat-error *ngIf="recipeForm.controls['servings'].hasError('required')">
             Please, provide how many this recipe will serve.
+          </mat-error>
+          <mat-error *ngIf="recipeForm.controls['servings'].hasError('max')">
+            Apologies, we do not allow recipes for more than 20 people
+          </mat-error>
+          <mat-error *ngIf="recipeForm.controls['servings'].hasError('min')">
+            Apologies, the recipe must at least feed 1 person
           </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width">
@@ -29,20 +35,38 @@
           <mat-error *ngIf="recipeForm.controls['prepTime'].hasError('required')">
             Please, provide a prep time.
           </mat-error>
+          <mat-error *ngIf="recipeForm.controls['prepTime'].hasError('max')">
+            Apologies, we try to keep our prep times within an hour
+          </mat-error>
+          <mat-error *ngIf="recipeForm.controls['prepTime'].hasError('min')">
+            Please, enter a valid time frame
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width">
           <input matInput placeholder="Cook Time in mins" formControlName="cookTime">
           <mat-error *ngIf="recipeForm.controls['cookTime'].hasError('required')">
             Please, provide a cook time.
           </mat-error>
+          <mat-error *ngIf="recipeForm.controls['cookTime'].hasError('max')">
+            Apologies, we try to keep our cook times within 6 hours
+          </mat-error>
+          <mat-error *ngIf="recipeForm.controls['cookTime'].hasError('min')">
+            Please, enter a valid time frame
+          </mat-error>
         </mat-form-field>
       </div>
-      <div class="row">
-        <mat-form-field appearance="legacy">
-          <input matInput placeholder="amount" [(ngModel)]="amount" placeholder="Amount of" [ngModelOptions]="{standalone: true}">
+      <div [ngClass]="screenWidth() > 800 ? 'row' : 'col'">
+        <mat-form-field appearance="legacy" [ngClass]="screenWidth() > 800 ? '' : 'full-width'">
+          <input matInput formControlName="amount" [(ngModel)]="amount" placeholder="Amount">
+          <mat-error *ngIf="recipeForm.controls['amount'].hasError('required')">
+            An amount is required
+          </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="legacy">
-          <input matInput placeholder="measurement" [(ngModel)]="measurement" placeholder="measured" [ngModelOptions]="{standalone: true}">
+        <mat-form-field appearance="legacy" [ngClass]="screenWidth() > 800 ? '' : 'full-width'">
+          <input matInput formControlName="measurement" [(ngModel)]="measurement" placeholder="Measurement">
+          <mat-error *ngIf="recipeForm.controls['measurement'].hasError('required')">
+            An amount is required
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width" appearance="legacy">
           <mat-label>Ingredient</mat-label>
@@ -54,7 +78,11 @@
         </mat-form-field>
       </div>
       <mat-list role="list">
-        <mat-list-item role="ingredient" *ngFor="let _i of data.ingredients">{{_i.amount}} {{_i.measurement}} {{_i.name}}</mat-list-item>
+        <mat-list-item role="ingredient" *ngFor="let _i of data.ingredients">
+          {{_i.amount}} {{_i.measurement}} {{_i.name}}
+          <span class="spacer"></span>
+          <button mat-mini-fab (click)="removeIngredient(_i)" id="remove-btn">-</button>
+        </mat-list-item>
       </mat-list>
       <mat-divider></mat-divider>
       <div class="col">
@@ -62,15 +90,19 @@
           <mat-list-item role="direction" *ngFor="let dir of data.directions; let i = index">{{i + 1}}. {{dir.instructions}}</mat-list-item>
         </mat-list>
         <div class="row" id="directions">
-          <mat-form-field appearance="legacy">
-            <mat-select [(value)]="selectedOption">
-              <mat-option *ngFor="let option of options" [value]="option">
-                {{option}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <input matInput class="direction-input" type="text" [(ngModel)]="nextDirection" placeholder="Direction" [ngModelOptions]="{standalone: true}">
-          <button mat-mini-fab (click)="addDirection(nextDirection)" id="fab-btn">+</button>
+          <div [ngClass]="screenWidth() > 800 ? 'row' : 'col'">
+            <mat-form-field appearance="legacy" [ngClass]="screenWidth() > 800 ? '' : 'full-width'">
+              <mat-select [(value)]="selectedOption">
+                <mat-option *ngFor="let option of options" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="row">
+              <input matInput class="direction-input" type="text" [(ngModel)]="nextDirection" placeholder="Direction" [ngModelOptions]="{standalone: true}">
+              <button mat-mini-fab (click)="addDirection(nextDirection)" id="fab-btn">+</button>
+            </div>
+          </div>
         </div>
       </div>
       <mat-divider></mat-divider>

@@ -10,6 +10,7 @@ import { MatTable } from '@angular/material/table';
 import { HttpService } from '../services/http-recipes.service';
 import { LoginService } from '../services/login.service';
 import { RecipeService } from '../services/recipe.service';
+import { Recipe } from '../models/Recipe';
 
 @Component({
   selector: 'app-recipes',
@@ -66,5 +67,9 @@ export class RecipesComponent implements AfterContentChecked, OnInit {
 
   getSpecials() {
     this.recipeService.gatherSpecials();
+  }
+
+  editRecipe(recipe: Recipe) {
+    console.log(recipe);
   }
 }
