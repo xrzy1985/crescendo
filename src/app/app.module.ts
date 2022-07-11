@@ -23,6 +23,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [AppComponent, NavComponent, RecipesComponent, FormComponent],
@@ -47,6 +50,9 @@ import { FormsModule } from '@angular/forms';
     ReactiveFormsModule,
     MatDialogModule,
     FormsModule,
+    MatSlideToggleModule,
+    MatCheckboxModule,
+    MatDividerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -19,7 +19,7 @@
                 <br/>
                 Cook: {{ recipe.cookTime }} mins
               </mat-card-subtitle>
-              <img mat-card-lg-image src="/assets/{{recipe.images.full}}">
+              <img mat-card-lg-image alt="Photograph of your delicious recipe." src="/assets/{{recipe.images.full}}">
             </mat-card-title-group>
             <mat-card-content>
               {{recipe.description}}
@@ -67,6 +67,7 @@
             <mat-card-actions>
               <mat-toolbar *ngIf="isLoggedIn">
                 <span class="spacer"></span>
+                <!-- @TODO implement a like system for logged in users -->
                 <!-- <button mat-button class="like-btn">LIKE</button> -->
                 <button mat-button class="edit-btn">EDIT</button>
               </mat-toolbar>
@@ -75,7 +76,5 @@
         </mat-expansion-panel>
       </mat-accordion>
     </dd>
-    <!-- <dt>{{titles[1]}}</dt>
-    <dd *ngFor="let special of specials">{{ special.title }}</dd> -->
   </dl>
 </div>

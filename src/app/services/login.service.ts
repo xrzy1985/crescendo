@@ -24,7 +24,6 @@ export class LoginService {
     if (user) {
       this.isLoggedIn = true;
       this.user = user;
-      console.log(this.user);
     }
   }
 

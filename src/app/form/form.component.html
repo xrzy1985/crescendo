@@ -1,81 +1,85 @@
 <form [formGroup]="recipeForm" novalidate>
-  <mat-card class="shipping-card">
-    <mat-card-header style="margin: 0;">
+  <mat-card class="recipe-card">
+    <mat-card-header>
       <mat-card-title>New Recipe Drop</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Title" formControlName="title">
-            <mat-error *ngIf="recipeForm.controls['title'].hasError('required')">
-              A title for your recipe is <strong>required</strong>.
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <textarea matInput placeholder="Description" formControlName="description"></textarea>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Serves how many people" formControlName="servings">
-            <mat-error *ngIf="recipeForm.controls['servings'].hasError('required')">
-              Please, provide how many this recipe will serve.
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Prep Time" formControlName="prepTime">
-            <mat-error *ngIf="recipeForm.controls['prepTime'].hasError('required')">
-              Please, provide a prep time.
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Cook Time" formControlName="cookTime">
-            <mat-error *ngIf="recipeForm.controls['cookTime'].hasError('required')">
-              Please, provide a cook time.
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-    </mat-card-content>
-    <div class="row">
-      <div class="col">
         <mat-form-field class="full-width">
-          <textarea matInput placeholder="Ingredients List" formControlName="ingredients"></textarea>
+          <input matInput placeholder="Title" formControlName="title">
+          <mat-error *ngIf="recipeForm.controls['title'].hasError('required')">
+            A title for your recipe is <strong>required</strong>.
+          </mat-error>
         </mat-form-field>
       </div>
-    </div>
-    <div class="row">
+      <div class="row">
+        <mat-form-field class="full-width">
+          <textarea matInput placeholder="Description" formControlName="description"></textarea>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Serves how many people" formControlName="servings">
+          <mat-error *ngIf="recipeForm.controls['servings'].hasError('required')">
+            Please, provide how many this recipe will serve.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Prep Time in mins" formControlName="prepTime">
+          <mat-error *ngIf="recipeForm.controls['prepTime'].hasError('required')">
+            Please, provide a prep time.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Cook Time in mins" formControlName="cookTime">
+          <mat-error *ngIf="recipeForm.controls['cookTime'].hasError('required')">
+            Please, provide a cook time.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="legacy">
+          <input matInput placeholder="amount" [(ngModel)]="amount" placeholder="Amount of" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+        <mat-form-field appearance="legacy">
+          <input matInput placeholder="measurement" [(ngModel)]="measurement" placeholder="measured" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="legacy">
+          <mat-label>Ingredient</mat-label>
+          <mat-select [disabled]="!allowIngredientSelection()" [(ngModel)]="_ingredient_" [ngModelOptions]="{standalone: true}">
+            <mat-option *ngFor="let ingredient of ingredients" (onSelectionChange)="addIngredient(ingredient)">
+              {{ingredient.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <mat-list role="list">
+        <mat-list-item role="ingredient" *ngFor="let _i of data.ingredients">{{_i.amount}} {{_i.measurement}} {{_i.name}}</mat-list-item>
+      </mat-list>
+      <mat-divider></mat-divider>
       <div class="col">
         <mat-list role="list">
-          <mat-list-item role="direction" *ngFor="let dir of data.directions; let i = index">{{i + 1}}. {{dir}}</mat-list-item>
+          <mat-list-item role="direction" *ngFor="let dir of data.directions; let i = index">{{i + 1}}. {{dir.instructions}}</mat-list-item>
         </mat-list>
         <div class="row" id="directions">
-          <input matInput type="text" [(ngModel)]="nextDirection" placeholder="Add more directions" [ngModelOptions]="{standalone: true}">
-          <button mat-mini-fab style="float:right; background-color: var(--prime);" (click)="addDirection(nextDirection)">+</button>
+          <mat-form-field appearance="legacy">
+            <mat-select [(value)]="selectedOption">
+              <mat-option *ngFor="let option of options" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <input matInput class="direction-input" type="text" [(ngModel)]="nextDirection" placeholder="Direction" [ngModelOptions]="{standalone: true}">
+          <button mat-mini-fab (click)="addDirection(nextDirection)" id="fab-btn">+</button>
         </div>
       </div>
-    </div>
-    <hr>
-    <p>
-      <mat-toolbar style="background-color: transparent;">
-        <span class="spacer"></span>
-        <button mat-raised-button color="primary" (click)="addRecipe()">Submit</button>
-    </mat-toolbar>
-    </p>
+      <mat-divider></mat-divider>
+      <p>
+        <mat-toolbar class="form-toolbar">
+          <span class="spacer"></span>
+          <button [disabled]="!allowSubmit()" mat-raised-button (click)="submitRecipe()" id="submit-btn">Submit</button>
+        </mat-toolbar>
+      </p>
+    </mat-card-content>
   </mat-card>
 </form>

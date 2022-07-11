@@ -70,12 +70,16 @@ export class NavComponent {
       .open(FormComponent, {
         width: '80vw',
         height: '80vh',
-        data: {title: '', description: '', servings: '', prepTime: '', cookTime: '', ingredients: [], directions: ['Gather materials']},
+        data: {
+          title: '',
+          description: '',
+          servings: '',
+          prepTime: '',
+          cookTime: '',
+          ingredients: [],
+          directions: [{ instructions: 'Gather materials', optional: false }],
+        },
       })
-      .afterClosed()
-      .subscribe((resp) => {
-        console.log(resp);
-      });
-    }
+      .afterClosed();
   }
-
+}

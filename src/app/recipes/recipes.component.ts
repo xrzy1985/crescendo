@@ -9,6 +9,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { HttpService } from '../services/http-recipes.service';
 import { LoginService } from '../services/login.service';
+import { RecipeService } from '../services/recipe.service';
 
 @Component({
   selector: 'app-recipes',
@@ -25,9 +26,12 @@ export class RecipesComponent implements AfterContentChecked, OnInit {
   mainState: boolean = false;
   ingredientState: boolean = false;
   directionState: boolean = false;
-  specialMap: Map<string, any> = new Map();
 
-  constructor(private http: HttpService, private loginService: LoginService) {
+  constructor(
+    private http: HttpService,
+    private loginService: LoginService,
+    private recipeService: RecipeService
+  ) {
     this.titles = ['Recipes', 'Specials'];
     this.isLoggedIn = false;
     this.showAdditionalDetails = false;
@@ -43,63 +47,24 @@ export class RecipesComponent implements AfterContentChecked, OnInit {
 
   ngAfterContentChecked(): void {
     this.isLoggedIn = this.loginService.isUserLoggedIn();
+    this.recipes = this.recipeService.getRecipes();
+    this.specials = this.recipeService.getSpecials();
+    this.ingredients = this.recipeService.getIngredients();
   }
 
   checkIngredient(id: string) {
-    let test = !!this.specialMap.has(id);
-    if (this.specials.length && !test) {
-      let container = this.specials.filter((s) => {
-        if (s.ingredientId === id) {
-          this.specialMap.set(id, {
-            title: s.title,
-            type: s.type,
-            text: s.text,
-          });
-          test = true;
-        }
-      });
-    }
-    return test;
+    return this.recipeService.checkIngredient(id);
   }
 
   getIngredientDetails(id: string) {
-    let i = this.specialMap.get(id);
-    return `${i.title} ${i.type} ${i.text}`;
+    return this.recipeService.getIngredientDetails(id);
   }
 
   getRecipes() {
-    this.http.getRecipes().subscribe({
-      next: (resp: any[]) => {
-        this.recipes.length = 0;
-        for (let i = 0, iLen = resp.length; i < iLen; i++) {
-          const recipe = resp[i];
-          this.ingredients = Array.from(
-            new Set(this.ingredients.concat(recipe.ingredients))
-          );
-          this.recipes.push(recipe);
-          console.log(recipe);
-        }
-        this.http.setRecipes(this.recipes);
-      },
-      error: (error: any) => {
-        console.error('ERROR: GET REQUEST');
-      },
-    });
+    this.recipeService.gatherRecipes();
   }
 
   getSpecials() {
-    this.http.getSpecials().subscribe({
-      next: (resp: any[]) => {
-        this.specials.length = 0;
-        for (let i = 0, iLen = resp.length; i < iLen; i++) {
-          const special = resp[i];
-          this.specials.push(special);
-        }
-        this.http.setSpecials(this.specials);
-      },
-      error: (error: any) => {
-        console.error('ERROR: GET REQUEST');
-      },
-    });
+    this.recipeService.gatherSpecials();
   }
 }

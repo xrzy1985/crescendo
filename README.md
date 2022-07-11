@@ -2,26 +2,22 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.4.
 
+## Prereqs
+
+1. A browswer
+2. VS code or similar
+3. Pull the code from github
+4. Open the folder in the root of the project
+5. run, npm i -g, in the root of the project folder
+
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Run `npm run this` for a server that will open `automatically` on the address, `http://localhost:4200/`
 
-## Code scaffolding
+## Development Board
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+C01: Start the edit process functionality; load recipe, modify data, see data logged
+C02: Save data into local source, ensure updates are apparent on UI
+C03: Add in POST/UPDATE request to JSON server to update the according record given a uuid
+C04: Implement a proper login form
+C05: ...

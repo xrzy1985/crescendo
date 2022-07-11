@@ -2,7 +2,7 @@
   width: 100%;
 }
 
-.shipping-card {
+.recipe-card {
   min-width: 120px;
   margin: 20px auto;
 }
@@ -14,6 +14,10 @@
 
 ::ng-deep .mat-card-header-text {
   margin: 0px;
+}
+
+mat-card-header {
+  margin: 0;
 }
 
 .row {
@@ -32,4 +36,22 @@
 
 .col:last-child {
   margin-right: 0;
+}
+
+.direction-input {
+  margin: 0 0 0 2vw;
+}
+
+.form-toolbar {
+  background-color: transparent;
+}
+
+#submit-btn {
+  background-color: var(--prime);
+  color: white;
+}
+
+#fab-btn {
+  float:right;
+  background-color: var(--prime);
 }

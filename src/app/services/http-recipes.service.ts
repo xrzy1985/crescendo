@@ -9,45 +9,13 @@ export class HttpService {
   RECIPES: string = 'recipes';
   SPECIALS: string = 'specials';
 
-  recipes: any[];
-  specials: any[];
-
-  constructor(private http: HttpClient) {
-    this.recipes = [];
-    this.specials = [];
-  }
-
-  gatherRecipes() {
-    this.getRecipes().subscribe({
-      next: (resp: any[]) => {
-        this.recipes.length = 0;
-        for (let i = 0, iLen = resp.length; i < iLen; i++) {
-          const recipe = resp[i];
-          if (recipe) {
-            this.recipes.push(recipe);
-          }
-        }
-        this.setRecipes(this.recipes);
-      },
-      error: (error: any) => {
-        console.error('ERROR: Recipes did not load correctly');
-      },
-    });
-  }
+  constructor(private http: HttpClient) {}
 
   getRecipes() {
     return this.http.get<any>(`${this.LOCAL_URL}/${this.RECIPES}`);
   }
 
-  setRecipes(recipes: any[]) {
-    this.recipes = recipes;
-  }
-
   getSpecials() {
     return this.http.get<any>(`${this.LOCAL_URL}/${this.SPECIALS}`);
-  }
-
-  setSpecials(specials: any[]) {
-    this.specials = specials;
   }
 }
