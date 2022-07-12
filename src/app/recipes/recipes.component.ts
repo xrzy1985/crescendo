@@ -11,6 +11,7 @@ import { HttpService } from '../services/http-recipes.service';
 import { LoginService } from '../services/login.service';
 import { RecipeService } from '../services/recipe.service';
 import { Recipe } from '../models/Recipe';
+import { DialogService } from '../services/dialog.service';
 
 @Component({
   selector: 'app-recipes',
@@ -31,7 +32,8 @@ export class RecipesComponent implements AfterContentChecked, OnInit {
   constructor(
     private http: HttpService,
     private loginService: LoginService,
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private dialogService: DialogService
   ) {
     this.titles = ['Recipes', 'Specials'];
     this.isLoggedIn = false;
@@ -69,7 +71,7 @@ export class RecipesComponent implements AfterContentChecked, OnInit {
     this.recipeService.gatherSpecials();
   }
 
-  editRecipe(recipe: Recipe) {
-    console.log(recipe);
+  editRecipe(recipe: Recipe): void {
+    this.dialogService.editDialog(recipe);
   }
 }

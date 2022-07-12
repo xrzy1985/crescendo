@@ -87,7 +87,7 @@
       <mat-divider></mat-divider>
       <div class="col">
         <mat-list role="list">
-          <mat-list-item role="direction" *ngFor="let dir of data.directions; let i = index">{{i + 1}}. {{dir.instructions}}</mat-list-item>
+          <mat-list-item role="direction" *ngFor="let dir of data.directions; let i = index">{{i + 1}}. {{dir.optional ? '* ' : ''}} {{dir.instructions}}</mat-list-item>
         </mat-list>
         <div class="row" id="directions">
           <div [ngClass]="screenWidth() > 800 ? 'row' : 'col'">
@@ -109,7 +109,7 @@
       <p>
         <mat-toolbar class="form-toolbar">
           <span class="spacer"></span>
-          <button [disabled]="!allowSubmit()" mat-raised-button (click)="submitRecipe()" id="submit-btn">Submit</button>
+          <button [disabled]="!allowSubmit()" mat-raised-button (click)="submitRecipe()" id="submit-btn">{{btnText}}</button>
         </mat-toolbar>
       </p>
     </mat-card-content>

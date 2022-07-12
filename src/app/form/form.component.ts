@@ -28,13 +28,14 @@ import { Ingredient, Recipe } from '../models/Recipe';
 })
 export class FormComponent {
   recipeForm = this.fb.group({
+    title: [null, Validators.required],
+    description: [null],
     amount: [null, Validators.required],
     measurement: [null, Validators.required],
     cookTime: [
       null,
       [Validators.required, Validators.min(1), Validators.max(360)],
     ],
-    description: [null],
     prepTime: [
       null,
       [Validators.required, Validators.min(1), Validators.max(60)],
@@ -43,15 +44,15 @@ export class FormComponent {
       null,
       [Validators.required, Validators.min(1), Validators.max(20)],
     ],
-    title: [null, Validators.required],
   });
   options: string[] = ['Optional', 'Not Optional'];
+  ingredients: any[];
   selectedOption = this.options[1];
   nextDirection: any = '';
-  _ingredient_: any;
   amount: any = '';
   measurement: any = '';
-  ingredients: any[];
+  _ingredient_: any;
+  btnText: String = 'Submit';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -60,6 +61,14 @@ export class FormComponent {
     private recipeService: RecipeService
   ) {
     this.ingredients = this.recipeService.getIngredients();
+    if (data.uuid) {
+      this.btnText = 'Edit';
+      this.recipeForm.controls['title'].setValue(data.title);
+      this.recipeForm.controls['description'].setValue(data.description);
+      this.recipeForm.controls['servings'].setValue(data.servings);
+      this.recipeForm.controls['cookTime'].setValue(data.cookTime);
+      this.recipeForm.controls['prepTime'].setValue(data.prepTime);
+    }
   }
 
   addDirection(dir: string) {

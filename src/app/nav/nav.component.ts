@@ -7,7 +7,8 @@ import { LoginService } from '../services/login.service';
 import { User } from '../models/User';
 import { RecipeService } from '../services/recipe.service';
 import { FormComponent } from '../form/form.component';
-import { Ingredient, Direction, PartialRecipe } from '../models/Recipe';
+import { Ingredient, Direction, PartialRecipe, Recipe } from '../models/Recipe';
+import { DialogService } from '../services/dialog.service';
 
 @Component({
   selector: 'app-nav',
@@ -29,6 +30,7 @@ export class NavComponent {
   constructor(
     private breakpointObserver: BreakpointObserver,
     public dialog: MatDialog,
+    private dialogService: DialogService,
     private loginService: LoginService,
     private recipeService: RecipeService
   ) {}
