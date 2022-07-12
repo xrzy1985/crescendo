@@ -14,10 +14,14 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `npm run this` for a server that will open `automatically` on the address, `http://localhost:4200/`
 
+## Note
+A mock login process is in place, in order to add recipes, one must log in first using the button at the top right hand side.
+
 ## Development Board
 
 C01: Start the edit process functionality; load recipe, modify data, see data logged  
-C02: Save data into local source, ensure updates are apparent on UI  
-C03: Add in POST/UPDATE request to JSON server to update the according record given a uuid  
-C04: Implement a proper login form  
+C02: Edit process should update data source
+C03: Save data into local source, ensure updates are apparent on UI  
+C04: Add in POST/UPDATE request to JSON server to update the according record given a uuid  
+C05: Implement a proper login form  
 C05: ...  
