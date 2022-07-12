@@ -95,6 +95,8 @@ export class FormComponent {
     this.dialogRef.close();
   }
 
+  close() { this.dialogRef.close(); }
+
   allowSubmit(): boolean {
     return (
       this.recipeForm.status !== 'INVALID' &&
@@ -149,6 +151,4 @@ export class FormComponent {
   screenWidth() {
     return window.innerWidth;
   }
-
-  close() { this.dialogRef.close(); }
 }

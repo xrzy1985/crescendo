@@ -41,7 +41,11 @@ export class NavComponent {
   }
 
   getGreeting(): string {
-    return this.isUserLoggedIn ? window.innerWidth > 800 ? 'Welcome back, ' : '' : 'Hello, ';
+    return this.isUserLoggedIn
+      ? window.innerWidth > 800
+        ? 'Welcome back, '
+        : ''
+      : 'Hello, ';
   }
 
   login(user: User) {
