@@ -149,4 +149,6 @@ export class FormComponent {
   screenWidth() {
     return window.innerWidth;
   }
+
+  close() { this.dialogRef.close(); }
 }

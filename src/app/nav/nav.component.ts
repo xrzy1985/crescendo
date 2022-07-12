@@ -69,7 +69,7 @@ export class NavComponent {
   }
 
   openDialog(): void {
-    const partial: PartialRecipe = {
+    this.dialogService.openDialog({
       title: '',
       description: '',
       servings: '',
@@ -77,13 +77,6 @@ export class NavComponent {
       cookTime: '',
       ingredients: [],
       directions: [{ instructions: 'Gather materials', optional: false }],
-    };
-    this.dialog
-      .open(FormComponent, {
-        width: '80vw',
-        height: '80vh',
-        data: partial,
-      })
-      .afterClosed();
+    });
   }
 }
