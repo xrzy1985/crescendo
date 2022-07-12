@@ -15,7 +15,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 Run `npm run this` for a server that will open `automatically` on the address, `http://localhost:4200/`
 
 ## Note
-A mock login process is in place, in order to add recipes, one must log in first using the button at the top right hand side.
+A mock login process is in place to mimic basic access right functionality; in order to add recipes, one must log in first using the button at the top right hand side.
 
 ## Development Board
 
