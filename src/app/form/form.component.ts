@@ -1,27 +1,12 @@
 import { Component, Inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormGroupDirective,
-  NgForm,
-  Validators,
-  AbstractControl,
-  ValidatorFn,
-  Validator,
-  NG_VALIDATORS,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { v4 as uuid } from 'uuid';
+import { Image, Ingredient, Recipe } from '../models/Recipe';
 import { FormService } from '../services/form.service';
 import { RecipeService } from '../services/recipe.service';
 import { UtilService } from '../services/util.service';
-import { Image, Ingredient, Recipe } from '../models/Recipe';
 
 @Component({
   selector: 'app-form',
@@ -29,16 +14,16 @@ import { Image, Ingredient, Recipe } from '../models/Recipe';
   styleUrls: ['./form.component.scss'],
 })
 export class FormComponent {
-  recipeForm = this.formService.getFormGroup();
-  recipe: any = {};
-  options: string[] = ['Optional', 'Not Optional'];
+  amount: any = '';
   btnText: String = 'Submit';
   ingredients: any[];
-  selectedOption = this.options[1];
-  nextDirection: any = '';
-  amount: any = '';
-  measurement: any = '';
   _ingredient_: any;
+  nextDirection: any = '';
+  measurement: any = '';
+  options: string[] = ['Optional', 'Not Optional'];
+  recipe: any = {};
+  recipeForm = this.formService.getFormGroup();
+  selectedOption = this.options[1];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -64,7 +49,7 @@ export class FormComponent {
   }
 
   submitRecipe(): void {
-    const _recipe = {
+    this.recipeService.pushRecipe({
       ...this.recipeForm.value,
       directions: this.recipe.directions,
       ingredients: this.recipe.ingredients,
@@ -72,41 +57,24 @@ export class FormComponent {
       editDate: new Date().toLocaleString(),
       postDate: new Date().toLocaleString(),
       uuid: uuid(),
-    };
-    this.recipeService.pushRecipe(_recipe);
+    });
     this.dialogRef.close();
   }
 
   close() { this.dialogRef.close(); }
 
-  allowSubmit(): boolean {
-    return (
-      this.recipeForm.status !== 'INVALID' &&
-      this.recipe.directions.length > 1 &&
-      this.recipe.ingredients.length > 0
-    );
-  }
+  allowSubmit(): boolean { return this.formService.allowSubmit(this.recipeForm, this.recipe); }
 
-  allowIngredientSelection(): boolean {
-    return this.isDef(this.amount) && this.isDef(this.measurement);
-  }
+  allowIngredientSelection(): boolean { return this.util.isDef(this.amount) && this.util.isDef(this.measurement); }
 
   addIngredient(ingredient: any) {
-    if (
-      ingredient &&
-      new RegExp('[0-9]').test(this.amount) &&
-      this.isDef(this.amount) &&
-      this.isDef(this.measurement)
-    ) {
-      let _ingredient: Ingredient = this.formService.buildIngredient(this.amount)(this.measurement)(ingredient.name)(ingredient.uuid);
-      this.recipe.ingredients.push(_ingredient);
-    }
+    this.recipe = this.formService.addIngredient(ingredient)(this.amount)(this.measurement)(this.recipe);
     this.resetIngredientDetails();
     this.clearLocalCache();
   }
 
-  removeIngredient(ingredient: Ingredient) {
-    this.recipe = this.formService.removeIngredient(ingredient, this.recipe);
+  removeIngredient(index: number) {
+    this.recipe = this.formService.removeIngredient(index, this.recipe);
   }
 
   clearLocalCache() {
@@ -117,8 +85,6 @@ export class FormComponent {
     this.recipeForm.controls.amount.reset();
     this.recipeForm.controls.measurement.reset();
   }
-
-  isDef = (value: any) => { return this.util.isDef(value); }
 
   screenWidth = (value: Number) => { return this.util.screenWidth(value); }
 }

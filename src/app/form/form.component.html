@@ -58,15 +58,9 @@
       <div [ngClass]="screenWidth(800) ? 'row' : 'col'">
         <mat-form-field appearance="legacy" [ngClass]="screenWidth(800) ? '' : 'full-width'">
           <input matInput formControlName="amount" [(ngModel)]="amount" placeholder="Amount">
-          <mat-error *ngIf="recipeForm.controls['amount'].hasError('required')">
-            An amount is required
-          </mat-error>
         </mat-form-field>
         <mat-form-field appearance="legacy" [ngClass]="screenWidth(800) ? '' : 'full-width'">
           <input matInput formControlName="measurement" [(ngModel)]="measurement" placeholder="Measurement">
-          <mat-error *ngIf="recipeForm.controls['measurement'].hasError('required')">
-            An amount is required
-          </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width" appearance="legacy">
           <mat-label>Ingredient</mat-label>
@@ -78,10 +72,10 @@
         </mat-form-field>
       </div>
       <mat-list role="list">
-        <mat-list-item role="ingredient" *ngFor="let _i of data.ingredients">
+        <mat-list-item role="ingredient" *ngFor="let _i of data.ingredients; let _index = index;">
           {{_i.amount}} {{_i.measurement}} {{_i.name}}
           <span class="spacer"></span>
-          <button mat-mini-fab (click)="removeIngredient(_i)" id="remove-btn">-</button>
+          <button mat-mini-fab (click)="removeIngredient(_index)" id="remove-btn">-</button>
         </mat-list-item>
       </mat-list>
       <mat-divider></mat-divider>

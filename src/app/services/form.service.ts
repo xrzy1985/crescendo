@@ -45,12 +45,16 @@ export class FormService {
         return this.fb.group({
             title: [null, Validators.required],
             description: [null],
-            amount: [null, Validators.required],
-            measurement: [null, Validators.required],
+            amount: [null],
+            measurement: [null],
             cookTime: [null, [Validators.required, Validators.min(1), Validators.max(360)],],
             prepTime: [null, [Validators.required, Validators.min(1), Validators.max(60)],],
             servings: [null, [Validators.required, Validators.min(1), Validators.max(20)],],
         });
+    }
+
+    allowSubmit(recipeForm: any, recipe: FullRecipe) {
+        return recipeForm.status !== 'INVALID' && recipe.directions.length > 1 && recipe.ingredients.length > 0;
     }
 
     /**
@@ -68,11 +72,15 @@ export class FormService {
         };
     };
 
-    removeIngredient(ingredient: Ingredient, recipe: FullRecipe) {
-        let index = recipe.ingredients.findIndex((i: Ingredient) => i.uuid === ingredient?.uuid);
-        if (index > -1) {
-            recipe.ingredients.splice(index, 1);
+    addIngredient = (ingredient: any) => (amount: any) => (measurement: any) => (recipe: FullRecipe) => {
+        if (ingredient && new RegExp('[0-9]').test(amount) && this.util.isDef(amount) && this.util.isDef(measurement)) {
+            recipe.ingredients.push(this.buildIngredient(amount)(measurement)(ingredient.name)(ingredient.uuid));
         }
+        return recipe;
+    }
+
+    removeIngredient(index: number, recipe: FullRecipe) {
+        recipe.ingredients.splice(index, 1);
         return recipe;
     }
 
