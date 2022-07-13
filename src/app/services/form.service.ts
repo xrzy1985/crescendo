@@ -1,32 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Direction, Ingredient, Image, FullRecipe } from '../models/Recipe';
 import { UtilService } from './util.service';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormGroupDirective,
-  NgForm,
-  Validators,
-  AbstractControl,
-  ValidatorFn,
-  Validator,
-  NG_VALIDATORS,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FormService {
+
     constructor(private fb: FormBuilder, private util: UtilService) {}
 
-    addDirection = (direction: String) => (option: String) => (recipe: FullRecipe) => {
+    addDirection = (direction: String) => (option: String) => (recipe: FullRecipe): FullRecipe => {
         recipe.directions.push({instructions: this.util.capitalize(direction), optional: option === 'Optional'});
         return recipe;
     };
 
     /**
-     * @function tbd
+     * @function setFormValues
      */
     setFormValues(recipeForm: any, data: any) {
         recipeForm.controls['title'].setValue(data.title);
@@ -37,11 +27,16 @@ export class FormService {
         return recipeForm;
     }
 
+    setFormValue(form: any, value: keyof any, val: any) {
+        form.controls[value].setValue(val);
+        return form;
+    }
+
     /**
      * @function getFormGroup
      * @returns FormGroup
      */
-    getFormGroup() {
+    getFormGroup(): FormGroup {
         return this.fb.group({
             title: [null, Validators.required],
             description: [null],

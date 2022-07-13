@@ -27,7 +27,6 @@ export class FormComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder,
     private dialogRef: MatDialogRef<FormComponent>,
     private formService: FormService,
     private recipeService: RecipeService,
@@ -42,7 +41,7 @@ export class FormComponent {
     }
   }
 
-  addDirection(direction: string) {
+  addDirection(direction: string): void {
     if (direction) {
       this.recipe = this.formService.addDirection(direction)(this.selectedOption)(this.recipe);
       this.nextDirection = '';
@@ -50,36 +49,27 @@ export class FormComponent {
   }
 
   submitRecipe(): void {
-    this.recipeForm.controls['title'].setValue(this.util.capitalize(this.recipeForm.value.title));
-    this.recipeService.pushRecipe({
-      ...this.recipeForm.value,
-      directions: this.recipe.directions,
-      ingredients: this.recipe.ingredients,
-      images: this.formService.getDefaultImage(),
-      editDate: new Date().toLocaleString(),
-      postDate: new Date().toLocaleString(),
-      uuid: uuid(),
-    });
+    this.recipeService.submitRecipes(this.recipeForm, this.recipe);
     this.dialogRef.close();
   }
 
-  close() { this.dialogRef.close(); }
+  close(): void { this.dialogRef.close(); }
 
   allowSubmit(): boolean { return this.formService.allowSubmit(this.recipeForm, this.recipe); }
 
   allowIngredientSelection(): boolean { return this.util.isDef(this.amount) && this.util.isDef(this.measurement); }
 
-  addIngredient(ingredient: any) {
+  addIngredient(ingredient: any): void {
     this.recipe = this.formService.addIngredient(ingredient)(this.amount)(this.measurement)(this.recipe);
     this.resetIngredientDetails();
     this.clearLocalCache();
   }
 
-  removeIngredient(index: number) {
+  removeIngredient(index: number): void {
     this.recipe = this.formService.removeIngredient(index, this.recipe);
   }
 
-  clearLocalCache() {
+  clearLocalCache(): void {
     this.amount = this.measurement = this._ingredient_ = '';    
   }
 
@@ -88,5 +78,5 @@ export class FormComponent {
     this.recipeForm.controls.measurement.reset();
   }
 
-  screenWidth = (value: Number) => { return this.util.screenWidth(value); }
+  screenWidth = (value: Number): boolean => { return this.util.screenWidth(value); }
 }

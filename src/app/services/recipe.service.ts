@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './http-recipes.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { UtilService } from './util.service';
+import { v4 as uuid } from 'uuid';
+import { FormService } from './form.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +15,7 @@ export class RecipeService {
   specials: any[];
   specialsMap: Map<string, any> = new Map();
 
-  constructor(private http: HttpService) {
+  constructor(private formService: FormService, private http: HttpService, private util: UtilService) {
     this.ingredients = [];
     this.recipes = [];
     this.specials = [];
@@ -39,9 +43,17 @@ export class RecipeService {
     return this.recipes;
   }
 
-  pushRecipe(recipe: any): void {
+  submitRecipes = (recipeForm: FormGroup, recipe: any) => {
     if (!this.recipes.find(r => r.uuid === recipe.uuid)) {
-      this.recipes.push(recipe);
+      this.recipes.push({
+        ...(this.formService.setFormValue(recipeForm, 'title', this.util.capitalize(recipeForm.value.title))).value,
+        directions: recipe.directions,
+        ingredients: recipe.ingredients,
+        images: this.formService.getDefaultImage(),
+        editDate: new Date().toLocaleString(),
+        postDate: new Date().toLocaleString(),
+        uuid: uuid(),
+      });
     }
   }
 
