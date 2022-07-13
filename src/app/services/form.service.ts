@@ -75,7 +75,9 @@ export class FormService {
     }
 
     removeIngredient(index: number, recipe: FullRecipe) {
-        recipe.ingredients.splice(index, 1);
+        if (index > -1) {
+            recipe.ingredients.splice(index, 1);
+        }
         return recipe;
     }
 
@@ -85,5 +87,9 @@ export class FormService {
      */
     getDefaultImage(): Image {
         return { full: '', medium: '', small: '' };
+    }
+
+    getButtonText(value: boolean = false): String {
+        return value ? 'Edit' : 'Submit';
     }
 }
