@@ -3,9 +3,16 @@
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="false">
-    <mat-toolbar>Menu</mat-toolbar>
+    <mat-toolbar>Recipe Drop</mat-toolbar>
     <mat-nav-list>
-      
+      <button mat-raised-button id="login" class="menu-login-button" *ngIf="!this.isUserLoggedIn"
+                (click)="login({name: 'James Patterson', email: 'jamespatterson.feswe@yahoo.com', pass: 'abc'})">
+        Log in
+      </button>
+      <button mat-raised-button id="login" class="menu-logout-button" *ngIf="this.isUserLoggedIn"
+                  (click)="logout({name: 'James Patterson', email: 'jamespatterson.feswe@yahoo.com', pass: 'abc'})">
+        Log Out
+      </button>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -19,7 +26,7 @@
       </button>
       <span>{{title}}</span>
       <span class="spacer"></span>
-      <span class="name">{{getGreeting()}}{{name}}</span>
+      <span class="name">{{ getGreeting() }}{{ name }}</span>
       <div class="example-button-row">
         <div *ngIf="this.isUserLoggedIn;else guest">
           <button mat-raised-button

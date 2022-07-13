@@ -20,18 +20,8 @@ mat-card-header {
   margin: 0;
 }
 
-.row {
-  display: flex;
-  flex-direction: row;
-}
-
 #directions {
   margin: 0 2vw;
-}
-
-.col {
-  flex: 1;
-  margin-right: 20px;
 }
 
 .col:last-child {
