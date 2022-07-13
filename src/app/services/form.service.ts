@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Direction, Image, FullRecipe } from '../models/Recipe';
+import { Direction, Ingredient, Image, FullRecipe } from '../models/Recipe';
 import { UtilService } from './util.service';
 import {
   FormBuilder,
@@ -67,6 +67,14 @@ export class FormService {
             uuid: uuid
         };
     };
+
+    removeIngredient(ingredient: Ingredient, recipe: FullRecipe) {
+        let index = recipe.ingredients.findIndex((i: Ingredient) => i.uuid === ingredient?.uuid);
+        if (index > -1) {
+            recipe.ingredients.splice(index, 1);
+        }
+        return recipe;
+    }
 
     /**
      * @function getDefaultImage

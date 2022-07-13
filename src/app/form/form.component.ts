@@ -106,10 +106,7 @@ export class FormComponent {
   }
 
   removeIngredient(ingredient: Ingredient) {
-    let index = this.recipe.ingredients.findIndex((i: Ingredient) => i.uuid === ingredient?.uuid);
-    if (index > -1) {
-      this.recipe.ingredients.splice(index, 1);
-    }
+    this.recipe = this.formService.removeIngredient(ingredient, this.recipe);
   }
 
   clearLocalCache() {
