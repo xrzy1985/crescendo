@@ -18,8 +18,10 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { v4 as uuid } from 'uuid';
+import { FormService } from '../services/form.service';
 import { RecipeService } from '../services/recipe.service';
-import { Ingredient, Recipe } from '../models/Recipe';
+import { UtilService } from '../services/util.service';
+import { Image, Ingredient, Recipe } from '../models/Recipe';
 
 @Component({
   selector: 'app-form',
@@ -27,38 +29,23 @@ import { Ingredient, Recipe } from '../models/Recipe';
   styleUrls: ['./form.component.scss'],
 })
 export class FormComponent {
-  recipeForm = this.fb.group({
-    title: [null, Validators.required],
-    description: [null],
-    amount: [null, Validators.required],
-    measurement: [null, Validators.required],
-    cookTime: [
-      null,
-      [Validators.required, Validators.min(1), Validators.max(360)],
-    ],
-    prepTime: [
-      null,
-      [Validators.required, Validators.min(1), Validators.max(60)],
-    ],
-    servings: [
-      null,
-      [Validators.required, Validators.min(1), Validators.max(20)],
-    ],
-  });
+  recipeForm = this.formService.getFormGroup();
   options: string[] = ['Optional', 'Not Optional'];
+  btnText: String = 'Submit';
   ingredients: any[];
   selectedOption = this.options[1];
   nextDirection: any = '';
   amount: any = '';
   measurement: any = '';
   _ingredient_: any;
-  btnText: String = 'Submit';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<FormComponent>,
-    private recipeService: RecipeService
+    private formService: FormService,
+    private recipeService: RecipeService,
+    private util: UtilService
   ) {
     this.ingredients = this.recipeService.getIngredients();
     if (data.uuid) {
@@ -86,7 +73,7 @@ export class FormComponent {
       ...this.recipeForm.value,
       directions: this.data.directions,
       ingredients: this.data.ingredients,
-      images: { full: '', medium: '', small: '' },
+      images: this.formService.getDefaultImage(),
       editDate: new Date().toLocaleString(),
       postDate: new Date().toLocaleString(),
       uuid: uuid(),
@@ -116,14 +103,10 @@ export class FormComponent {
       this.isDef(this.amount) &&
       this.isDef(this.measurement)
     ) {
-      let _ingredient: Ingredient = {
-        amount: parseInt(this.amount),
-        measurement: this.measurement,
-        name: ingredient.name,
-        uuid: ingredient.uuid,
-      };
+      let _ingredient: Ingredient = this.formService.buildIngredient(this.amount)(this.measurement)(ingredient.name)(ingredient.uuid);
       this.data.ingredients.push(_ingredient);
     }
+    this.resetIngredientDetails();
     this.clearLocalCache();
   }
 
@@ -137,18 +120,15 @@ export class FormComponent {
   }
 
   clearLocalCache() {
-    this.amount = '';
+    this.amount = this.measurement = this._ingredient_ = '';    
+  }
+
+  resetIngredientDetails(): void {
     this.recipeForm.controls.amount.reset();
-    this.measurement = '';
     this.recipeForm.controls.measurement.reset();
-    this._ingredient_ = '';
   }
 
-  isDef(val: any) {
-    return val !== undefined && val !== null && val !== '';
-  }
+  isDef = (value: any) => { return this.util.isDef(value); }
 
-  screenWidth() {
-    return window.innerWidth;
-  }
+  screenWidth = (value: Number) => { return this.util.screenWidth(value); }
 }

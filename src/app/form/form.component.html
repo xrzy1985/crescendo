@@ -17,7 +17,7 @@
           <textarea matInput placeholder="Description of the recipe you're submitting" formControlName="description"></textarea>
         </mat-form-field>
       </div>
-      <div [ngClass]="screenWidth() > 800 ? 'row' : 'col'">
+      <div [ngClass]="screenWidth(800) ? 'row' : 'col'">
         <mat-form-field class="full-width">
           <input matInput placeholder="Serves how many people" formControlName="servings">
           <mat-error *ngIf="recipeForm.controls['servings'].hasError('required')">
@@ -55,14 +55,14 @@
           </mat-error>
         </mat-form-field>
       </div>
-      <div [ngClass]="screenWidth() > 800 ? 'row' : 'col'">
-        <mat-form-field appearance="legacy" [ngClass]="screenWidth() > 800 ? '' : 'full-width'">
+      <div [ngClass]="screenWidth(800) ? 'row' : 'col'">
+        <mat-form-field appearance="legacy" [ngClass]="screenWidth(800) ? '' : 'full-width'">
           <input matInput formControlName="amount" [(ngModel)]="amount" placeholder="Amount">
           <mat-error *ngIf="recipeForm.controls['amount'].hasError('required')">
             An amount is required
           </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="legacy" [ngClass]="screenWidth() > 800 ? '' : 'full-width'">
+        <mat-form-field appearance="legacy" [ngClass]="screenWidth(800) ? '' : 'full-width'">
           <input matInput formControlName="measurement" [(ngModel)]="measurement" placeholder="Measurement">
           <mat-error *ngIf="recipeForm.controls['measurement'].hasError('required')">
             An amount is required
@@ -90,8 +90,8 @@
           <mat-list-item role="direction" *ngFor="let dir of data.directions; let i = index">{{i + 1}}. {{dir.optional ? '* ' : ''}} {{dir.instructions}}</mat-list-item>
         </mat-list>
         <div class="row" id="directions">
-          <div [ngClass]="screenWidth() > 800 ? 'row' : 'col'">
-            <mat-form-field appearance="legacy" [ngClass]="screenWidth() > 800 ? '' : 'full-width'">
+          <div [ngClass]="screenWidth(800) ? 'row' : 'col'">
+            <mat-form-field appearance="legacy" [ngClass]="screenWidth(800) ? '' : 'full-width'">
               <mat-select [(value)]="selectedOption">
                 <mat-option *ngFor="let option of options" [value]="option">
                   {{option}}
