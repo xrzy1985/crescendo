@@ -19,8 +19,8 @@ A mock login process is in place to mimic basic access right functionality; in o
 
 ## Development Board
 
-C01: Start the edit process functionality; load recipe, modify data, see data logged  
-C02: Edit process should update data source
+C01: Start the edit process functionality; load recipe, modify data  
+C02: Edit process should update data source locally  
 C03: Save data into local source, ensure updates are apparent on UI  
 C04: Add in POST/UPDATE request to JSON server to update the according record given a uuid  
 C05: Implement a proper login form  
