@@ -99,7 +99,9 @@
               </mat-select>
             </mat-form-field>
             <div class="row">
-              <input matInput class="direction-input" type="text" [(ngModel)]="nextDirection" placeholder="Direction" [ngModelOptions]="{standalone: true}">
+              <mat-form-field appearance="legacy" [ngClass]="screenWidth(800) ? '' : 'full-width'">
+                <input matInput class="direction-input" type="text" [(ngModel)]="nextDirection" placeholder="Direction" [ngModelOptions]="{standalone: true}">
+              </mat-form-field>
               <button mat-mini-fab (click)="addDirection(nextDirection)" id="fab-btn">+</button>
             </div>
           </div>

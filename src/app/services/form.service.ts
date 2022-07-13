@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Image } from '../models/Recipe';
+import { Direction, Image, FullRecipe } from '../models/Recipe';
+import { UtilService } from './util.service';
 import {
   FormBuilder,
   FormControl,
@@ -17,7 +18,24 @@ import {
   providedIn: 'root',
 })
 export class FormService {
-  constructor(private fb: FormBuilder) {}
+    constructor(private fb: FormBuilder, private util: UtilService) {}
+
+    addDirection = (direction: String) => (option: String) => (recipe: FullRecipe) => {
+        recipe.directions.push({instructions: this.util.capitalize(direction), optional: option === 'Optional'});
+        return recipe;
+    };
+
+    /**
+     * @function tbd
+     */
+    setFormValues(recipeForm: any, data: any) {
+        recipeForm.controls['title'].setValue(data.title);
+        recipeForm.controls['description'].setValue(data.description);
+        recipeForm.controls['servings'].setValue(data.servings);
+        recipeForm.controls['cookTime'].setValue(data.cookTime);
+        recipeForm.controls['prepTime'].setValue(data.prepTime);
+        return recipeForm;
+    }
 
     /**
      * @function getFormGroup
@@ -35,13 +53,13 @@ export class FormService {
         });
     }
 
-  /**
-   * @function buildIngredient
-   * @description Build out Ingredient Object
-   * @returns Ingredient
-   * @Note example of currying
-   */
-  buildIngredient = (amount: string) => (measurement: string) => (name: string) => (uuid: string) => {
+    /**
+     * @function buildIngredient
+     * @description Build out Ingredient Object
+     * @returns Ingredient
+     * @Note example of currying
+     */
+    buildIngredient = (amount: string) => (measurement: string) => (name: string) => (uuid: string) => {
         return {
             amount: parseInt(amount),
             measurement: measurement,
@@ -50,11 +68,11 @@ export class FormService {
         };
     };
 
-  /**
-   * @function getDefaultImage
-   * @returns Image default empty instance
-   */
-  getDefaultImage(): Image {
-    return { full: '', medium: '', small: '' };
-  }
+    /**
+     * @function getDefaultImage
+     * @returns Image default empty instance
+     */
+    getDefaultImage(): Image {
+        return { full: '', medium: '', small: '' };
+    }
 }

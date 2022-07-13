@@ -30,6 +30,7 @@ import { Image, Ingredient, Recipe } from '../models/Recipe';
 })
 export class FormComponent {
   recipeForm = this.formService.getFormGroup();
+  recipe: any = {};
   options: string[] = ['Optional', 'Not Optional'];
   btnText: String = 'Submit';
   ingredients: any[];
@@ -48,22 +49,16 @@ export class FormComponent {
     private util: UtilService
   ) {
     this.ingredients = this.recipeService.getIngredients();
-    if (data.uuid) {
+    this.recipe = { ...data };
+    if (this.recipe?.uuid) {
       this.btnText = 'Edit';
-      this.recipeForm.controls['title'].setValue(data.title);
-      this.recipeForm.controls['description'].setValue(data.description);
-      this.recipeForm.controls['servings'].setValue(data.servings);
-      this.recipeForm.controls['cookTime'].setValue(data.cookTime);
-      this.recipeForm.controls['prepTime'].setValue(data.prepTime);
+      this.recipeForm = this.formService.setFormValues(this.recipeForm, this.recipe);
     }
   }
 
-  addDirection(dir: string) {
-    if (dir) {
-      this.data.directions.push({
-        instructions: dir[0].toUpperCase() + dir.slice(1),
-        optional: this.selectedOption === 'Optional',
-      });
+  addDirection(direction: string) {
+    if (direction) {
+      this.recipe = this.formService.addDirection(direction)(this.selectedOption)(this.recipe);
       this.nextDirection = '';
     }
   }
@@ -71,8 +66,8 @@ export class FormComponent {
   submitRecipe(): void {
     const _recipe = {
       ...this.recipeForm.value,
-      directions: this.data.directions,
-      ingredients: this.data.ingredients,
+      directions: this.recipe.directions,
+      ingredients: this.recipe.ingredients,
       images: this.formService.getDefaultImage(),
       editDate: new Date().toLocaleString(),
       postDate: new Date().toLocaleString(),
@@ -87,8 +82,8 @@ export class FormComponent {
   allowSubmit(): boolean {
     return (
       this.recipeForm.status !== 'INVALID' &&
-      this.data.directions.length > 1 &&
-      this.data.ingredients.length > 0
+      this.recipe.directions.length > 1 &&
+      this.recipe.ingredients.length > 0
     );
   }
 
@@ -104,18 +99,16 @@ export class FormComponent {
       this.isDef(this.measurement)
     ) {
       let _ingredient: Ingredient = this.formService.buildIngredient(this.amount)(this.measurement)(ingredient.name)(ingredient.uuid);
-      this.data.ingredients.push(_ingredient);
+      this.recipe.ingredients.push(_ingredient);
     }
     this.resetIngredientDetails();
     this.clearLocalCache();
   }
 
   removeIngredient(ingredient: Ingredient) {
-    if (ingredient) {
-      let index = this.data.ingredients.findIndex((i: Ingredient) => i.uuid === ingredient.uuid);
-      if (index > -1) {
-        this.data.ingredients.splice(index, 1);
-      }
+    let index = this.recipe.ingredients.findIndex((i: Ingredient) => i.uuid === ingredient?.uuid);
+    if (index > -1) {
+      this.recipe.ingredients.splice(index, 1);
     }
   }
 
