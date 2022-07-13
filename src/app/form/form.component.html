@@ -19,12 +19,12 @@
       </div>
       <div [ngClass]="screenWidth(800) ? 'row' : 'col'">
         <mat-form-field class="full-width">
-          <input matInput placeholder="Serves how many people" formControlName="servings">
+          <input matInput placeholder="Serves how many" formControlName="servings">
           <mat-error *ngIf="recipeForm.controls['servings'].hasError('required')">
             Please, provide how many this recipe will serve.
           </mat-error>
           <mat-error *ngIf="recipeForm.controls['servings'].hasError('max')">
-            Apologies, we do not allow recipes for more than 20 people
+            Apologies, we do not allow recipes for more than 20
           </mat-error>
           <mat-error *ngIf="recipeForm.controls['servings'].hasError('min')">
             Apologies, the recipe must at least feed 1 person

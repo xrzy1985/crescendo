@@ -22,7 +22,7 @@ export class FormComponent {
   measurement: any = '';
   options: string[] = ['Optional', 'Not Optional'];
   recipe: any = {};
-  recipeForm = this.formService.getFormGroup();
+  recipeForm: any;
   selectedOption = this.options[1];
 
   constructor(
@@ -33,6 +33,7 @@ export class FormComponent {
     private recipeService: RecipeService,
     private util: UtilService
   ) {
+    this.recipeForm = this.formService.getFormGroup();
     this.ingredients = this.recipeService.getIngredients();
     this.recipe = { ...data };
     if (this.recipe?.uuid) {
@@ -49,6 +50,7 @@ export class FormComponent {
   }
 
   submitRecipe(): void {
+    this.recipeForm.controls['title'].setValue(this.util.capitalize(this.recipeForm.value.title));
     this.recipeService.pushRecipe({
       ...this.recipeForm.value,
       directions: this.recipe.directions,
